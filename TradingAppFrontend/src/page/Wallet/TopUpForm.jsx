@@ -13,13 +13,14 @@ const TopUpForm = () => {
       setAmount(value);
     }
   };
-  const handleSubmit = () => {
-    console.log("Amount: ", amount);
-    console.log("Payment Method: ", paymentMethod);
-  };
+
   const [paymentMethod, setPaymentMethod] = React.useState("RAZORPAY");
   const handlePaymentMethod = (value) => {
     setPaymentMethod(value);
+  };
+  const handleSubmit = () => {
+    console.log("Amount: ", amount);
+    console.log("Payment Method: ", paymentMethod);
   };
 
   return (
