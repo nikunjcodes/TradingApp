@@ -11,6 +11,7 @@ import { BookmarkFilledIcon } from "@radix-ui/react-icons";
 import { BookmarkIcon, DotIcon } from "lucide-react";
 import React from "react";
 import TradingForm from "./TradingForm";
+import StockChart from "../home/StockChart";
 
 const StockDetails = () => {
   return (
@@ -61,6 +62,9 @@ const StockDetails = () => {
             </DialogContent>
           </Dialog>
         </div>
+      </div>
+      <div className="mt-14">
+        <StockChart />
       </div>
     </div>
   );
