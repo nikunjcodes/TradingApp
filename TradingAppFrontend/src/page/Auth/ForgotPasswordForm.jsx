@@ -28,7 +28,6 @@ const ForgotPasswordForm = () => {
 
   const onSubmit = () => {
     console.log(data);
-    // Handle password reset logic here
   };
 
   return (

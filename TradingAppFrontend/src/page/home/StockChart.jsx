@@ -1,32 +1,31 @@
-import { Button } from '@/components/ui/button';
-import React from 'react'
-import ReactApexChart from 'react-apexcharts'
-const timeSeries=[
-    {
-        keyword: "DIGITAL_CURRENCY_DAILY",
-        key:"TIME SERIES (DAILY)",
-        lable:"1 Day",
-        value: 1,
-    },
-    {
-        keyword: "DIGITAL_CURRENCY_WEEKLY",
-        key:"TIME SERIES (WEEKLY)",
-        lable:"1 Week",
-        value: 7,
-    },
-    {
-        keyword: "DIGITAL_CURRENCY_MONTHLY",
-        key:"TIME SERIES (MONTHLY)",
-        lable:"1 Month",
-        value: 30,
-    }
-
-]
+import { Button } from "@/components/ui/button";
+import React from "react";
+import ReactApexChart from "react-apexcharts";
+const timeSeries = [
+  {
+    keyword: "DIGITAL_CURRENCY_DAILY",
+    key: "TIME SERIES (DAILY)",
+    lable: "1 Day",
+    value: 1,
+  },
+  {
+    keyword: "DIGITAL_CURRENCY_WEEKLY",
+    key: "TIME SERIES (WEEKLY)",
+    lable: "1 Week",
+    value: 7,
+  },
+  {
+    keyword: "DIGITAL_CURRENCY_MONTHLY",
+    key: "TIME SERIES (MONTHLY)",
+    lable: "1 Month",
+    value: 30,
+  },
+];
 const StockChart = () => {
-    const [activeLable  , setActiveLable] = React.useState("1 Day")
+  const [activeLable, setActiveLable] = React.useState("1 Day");
   const series = [
     {
-      name: 'Stock Price', // You can give a name to your series for clarity
+      name: "Stock Price", // You can give a name to your series for clarity
       data: [
         [1730556489076, 69312.3212739771],
         [1730560576224, 69183.8287781954],
@@ -73,8 +72,8 @@ const StockChart = () => {
         [1730708330159, 68639.8228568942],
         [1730711457629, 68816.4047995141],
         [1730714991523, 68795.7748895565],
-      ]
-    }
+      ],
+    },
   ];
 
   const options = {
@@ -83,15 +82,15 @@ const StockChart = () => {
       type: "area",
       height: 450,
       zoom: {
-        autoScaleYaxis: true
-      }
+        autoScaleYaxis: true,
+      },
     },
     dataLabels: {
-      enabled: false
+      enabled: false,
     },
     xaxis: {
       type: "datetime",
-      tickAmount: 6
+      tickAmount: 6,
     },
     colors: ["#758AA2"],
     markers: {
@@ -99,14 +98,14 @@ const StockChart = () => {
       strokeColor: "#fff",
       size: 0,
       strokeWidth: 1,
-      style: "hollow"
+      style: "hollow",
     },
     tooltip: {
-      theme: "dark",  // Using a dark theme for better visibility
+      theme: "dark",
       style: {
         fontSize: "12px", // Font size
         fontFamily: "Arial, Helvetica, sans-serif", // Font style
-        color: "#fff",  // Text color (white)
+        color: "#fff", // Text color (white)
       },
       onDatasetHover: {
         highlightDataSeries: true,
@@ -121,37 +120,47 @@ const StockChart = () => {
         title: {
           formatter: function (seriesName) {
             return "Price"; // Customize the title
-          }
-        }
+          },
+        },
       },
       fixed: {
-        enabled: false,  // Tooltip will move with the cursor
-        position: 'topRight',
+        enabled: false, // Tooltip will move with the cursor
+        position: "topRight",
         offsetX: 0,
-        offsetY: 0
-      }
+        offsetY: 0,
+      },
     },
     grid: {
       borderColor: "#47535E",
       strokeDashArray: 4,
-      show: true
-    }
+      show: true,
+    },
   };
-  const handleActiveLable=(value)=>{
-        setActiveLable(value);
-  }
+  const handleActiveLable = (value) => {
+    setActiveLable(value);
+  };
 
   return (
     <div>
-        <div className='space-x-3'>
-            {timeSeries.map((item)=>
-            <Button variant = {activeLable== item.lable ? "default" : "outline"} onClick={()=>handleActiveLable(item.lable)} key={item.lable} className="rounded-full" >
-                {item.lable}
-            </Button>
-            )}
-        </div>
-      <div id='chart-timelines'>
-        <ReactApexChart options={options} series={series} type="area" height={450} />
+      <div className="space-x-3">
+        {timeSeries.map((item) => (
+          <Button
+            variant={activeLable == item.lable ? "default" : "outline"}
+            onClick={() => handleActiveLable(item.lable)}
+            key={item.lable}
+            className="rounded-full"
+          >
+            {item.lable}
+          </Button>
+        ))}
+      </div>
+      <div id="chart-timelines">
+        <ReactApexChart
+          options={options}
+          series={series}
+          type="area"
+          height={450}
+        />
       </div>
     </div>
   );

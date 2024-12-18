@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.tradingapp.service.WalletService;
 @RestController
-@RequestMapping("/api/wallet")
 public class WalletController {
     @Autowired
     private WalletService walletService;
@@ -21,6 +20,7 @@ public class WalletController {
     private UserService userService;
     @Autowired
     private OrderService orderService;
+    @GetMapping("/api/wallet")
     public ResponseEntity<Wallet> getUserWallet(@RequestHeader("Authorization") String jwt) throws Exception {
         User user = userService.findUserProfileByJwt(jwt);
         Wallet wallet  =walletService.getUserWallet(user);

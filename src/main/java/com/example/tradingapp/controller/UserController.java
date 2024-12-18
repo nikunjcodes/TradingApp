@@ -32,7 +32,11 @@ public class UserController {
     @GetMapping("/api/users/profile")
     public ResponseEntity<User> getUserProfile( @RequestHeader("Authorization") String jwt) throws Exception {
         User user = userService.findUserProfileByJwt(jwt);
-        return new ResponseEntity<User>(user , HttpStatus.OK);
+        System.out.println("Authorization Header: " + jwt);
+
+        if(user==null)
+            throw new Exception("USer not found");
+        return new ResponseEntity<>(user, HttpStatus.OK);
 
     }
     @PatchMapping("/api/users/enable-two-factor/verify-otp/{otp}")

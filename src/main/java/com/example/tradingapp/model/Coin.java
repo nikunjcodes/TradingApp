@@ -1,6 +1,11 @@
 package com.example.tradingapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Data;
@@ -70,7 +75,8 @@ public class Coin {
 
     @JsonProperty("ath_change_percentage")
     private double athChangePercentage;
-
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonProperty("ath_date")
     private LocalDateTime athDate;
 
@@ -79,13 +85,15 @@ public class Coin {
 
     @JsonProperty("atl_change_percentage")
     private double atlChangePercentage;
-
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonProperty("atl_date")
     private LocalDateTime atlDate;
 
-    @JsonProperty("roi")
+    @JsonIgnore
     private Double roi;
-
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonProperty("last_updated")
     private LocalDateTime lastUpdated;
 }

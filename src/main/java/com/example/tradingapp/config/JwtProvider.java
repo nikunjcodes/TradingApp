@@ -13,31 +13,45 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class JwtProvider {
-    private static SecretKey  key =Keys.hmacShaKeyFor(JwtConstant.SECRETE_KEY.getBytes());
-    public static String generateToken(Authentication auth){
+    private static final SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRETE_KEY.getBytes());
+
+    public static String generateToken(Authentication auth) {
+        // Extract authorities
         Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
         String roles = populateAuthorities(authorities);
-        return Jwts.builder().setIssuedAt( new Date())
-                .setExpiration(new Date(new Date().getTime() + 864000))
-                .claim("email" , auth.getName())
+
+        // Build and sign the JWT
+        return Jwts.builder()
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(new Date().getTime() + 86400000)) // Token expiration
+                .claim("email", auth.getName())
                 .claim("authorities", roles)
                 .signWith(key)
                 .compact();
     }
-    public static String getEmailFromToken(String token){
-        token = token.substring(7);
-        Claims claims = Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload();
-        String email = String.valueOf(claims.get("email"));
-        return email;
 
+    public static String getEmailFromToken(String token) {
+        Claims claims = parseClaims(token);
+        return String.valueOf(claims.get("email"));
     }
 
-    private static String populateAuthorities(Collection<? extends GrantedAuthority> authorities)    {
+    private static Claims parseClaims(String token) {
+        // Remove "Bearer " prefix if present
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+        return Jwts.parser()
+                .verifyWith(key)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+
+    private static String populateAuthorities(Collection<? extends GrantedAuthority> authorities) {
         Set<String> auth = new HashSet<>();
-        for(GrantedAuthority ga : authorities){
+        for (GrantedAuthority ga : authorities) {
             auth.add(ga.getAuthority());
         }
-        return String.join("," ,auth);
+        return String.join(",", auth);
     }
-
 }

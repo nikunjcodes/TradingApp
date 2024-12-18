@@ -8,6 +8,7 @@ import com.example.tradingapp.response.AuthResponse;
 import com.example.tradingapp.service.CustomerUserDetailsService;
 import com.example.tradingapp.service.EmailService;
 import com.example.tradingapp.service.TwoFactorOtpService;
+import com.example.tradingapp.service.WatchlistService;
 import com.example.tradingapp.utils.OtpUtils;
 import org.hibernate.mapping.TableOwner;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,8 @@ public class AuthController {
     private EmailService emailService;
     @Autowired
     private CustomerUserDetailsService customerUserDetailsService;
-
+    @Autowired
+    private WatchlistService watchlistService;
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> register(@RequestBody User user) throws Exception {
 
@@ -44,6 +46,7 @@ public class AuthController {
         newUser.setFullName(user.getFullName());
         newUser.setPassword(user.getPassword());
         User savedUser = userRepository.save(newUser);
+        watchlistService.createWatchlist(savedUser);
         Authentication auth = new UsernamePasswordAuthenticationToken(
                 user.getEmail(),
                 user.getPassword()

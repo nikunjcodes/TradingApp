@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.tradingapp.service.WatchlistService;
 @RestController
-
+@RequestMapping("/api/watchlist")
 public class WatchlistController {
     @Autowired
     private WatchlistService watchlistService;
@@ -26,7 +26,7 @@ public class WatchlistController {
             @RequestHeader("Authorization") String jwt
     ) throws Exception{
         User user = userService.findUserProfileByJwt(jwt);
-        Watchlist createdWatchlist = watchlistService.createWatchlist(user);
+        Watchlist createdWatchlist = watchlistService.findUsserWatchlist(user.getId());
         return ResponseEntity.ok(createdWatchlist);
     }
     @PostMapping("/create")
