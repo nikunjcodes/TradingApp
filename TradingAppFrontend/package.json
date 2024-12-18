@@ -29,9 +29,13 @@
     "react-apexcharts": "^1.6.0",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.2",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^7.0.1",
+    "redux": "^5.0.1",
+    "redux-thunk": "^3.1.0",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
+    "thunk": "^0.0.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {

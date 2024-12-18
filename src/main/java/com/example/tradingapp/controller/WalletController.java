@@ -33,7 +33,7 @@ public class WalletController {
         Wallet wallet = walletService.walletToUserTransfer(senderUser , receiverWallet , req.getAmount());
         return new ResponseEntity<>(wallet , HttpStatus.ACCEPTED);
     }
-    @PutMapping("/api/wallet/order/{orderId}/pay")
+    @PutMapping("/api/wallet/order/{orderId}/payTo")
     public ResponseEntity<Wallet> walletToWalletTransfer(@RequestHeader("Authorization") String jwt , @PathVariable Long orderId) throws Exception{
        User user = userService.findUserProfileByJwt(jwt);
        Order order = orderService.getOrderById(orderId);
