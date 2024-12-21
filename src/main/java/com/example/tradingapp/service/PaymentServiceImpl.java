@@ -99,10 +99,10 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public PaymentResponse createRazorpayPaymentLink(User user, Long amount) {
+    public PaymentResponse createRazorpayPaymentLink(User user, Long amount , Long orderId ) {
         Long amountInPaisa = amount * 100; // Razorpay uses paisa as the unit
         try {
-            RazorpayClient razorpayClient = new RazorpayClient(apiKey, apiSecretKey);
+            RazorpayClient razorpayClient = new RazorpayClient("rzp_test_VZvbrluBytjbfk", "pD2udISrkq4gIQp9CwSJW8eh");
             JSONObject paymentLinkRequest = new JSONObject();
             paymentLinkRequest.put("amount", amountInPaisa);
             paymentLinkRequest.put("currency", "INR");
@@ -118,7 +118,7 @@ public class PaymentServiceImpl implements PaymentService {
             paymentLinkRequest.put("notify", notify);
 
             paymentLinkRequest.put("reminder_enable", true);
-            paymentLinkRequest.put("callback_url", "http://localhost:5173/wallet");
+            paymentLinkRequest.put("callback_url", "http://localhost:5173/wallet?order_id=" + orderId);
             paymentLinkRequest.put("callback_method", "get");
 
             logger.debug("Payment Link Request: {}", paymentLinkRequest);

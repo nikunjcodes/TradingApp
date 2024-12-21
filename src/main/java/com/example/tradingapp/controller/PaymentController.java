@@ -17,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+
 @RequestMapping
 @RestController
 public class PaymentController {
@@ -38,7 +41,7 @@ public class PaymentController {
         PaymentResponse paymentResponse = null;
         PaymentOrder order = paymentService.createOrder(user , amount , paymentMethod);
         if(paymentMethod.equals(PaymentMethod.RAZORPAY)){
-            paymentResponse = paymentService.createRazorpayPaymentLink(user , amount);
+            paymentResponse = paymentService.createRazorpayPaymentLink(user , amount , order.getId());
         }else if(paymentMethod.equals(PaymentMethod.STRIPE)){
             paymentResponse = paymentService.createStripePaymentLink(user , amount , order.getId());
         }
@@ -65,6 +68,9 @@ return new ResponseEntity<>(wallet , HttpStatus.ACCEPTED);
         Wallet wallet  = walletService.getUserWallet( user);
         PaymentOrder order = paymentService.getPaymentOrderById(orderId);
         Boolean status = paymentService.proceedPaymentOrder(order , paymentId);
+        if(wallet.getBalance()==null){
+            wallet.setBalance(BigDecimal.ZERO);
+        }
         if(status){
             walletService.addBalance(wallet , order.getAmount());
         }
