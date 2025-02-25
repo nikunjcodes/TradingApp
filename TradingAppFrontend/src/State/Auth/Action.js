@@ -10,12 +10,12 @@ import {
   REGISTER_FAILURE,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
-} from "./ActionType";
+} from "./ActionTypes";
 
 export const register = (userData) => async (dispatch) => {
   dispatch({ type: REGISTER_REQUEST });
 
-  const baseUrl = "http://localhost:5454";
+  const baseUrl = "http://localhost:5455";
 
   try {
     const response = await axios.post(`${baseUrl}/auth/signup`, userData);
@@ -33,7 +33,7 @@ export const register = (userData) => async (dispatch) => {
 export const login = (userData) => async (dispatch) => {
   dispatch({ type: LOGIN_REQUEST });
 
-  const baseUrl = "http://localhost:5454";
+  const baseUrl = "http://localhost:5455";
 
   try {
     const response = await axios.post(`${baseUrl}/auth/signin`, userData.data);
@@ -52,7 +52,7 @@ export const login = (userData) => async (dispatch) => {
 export const getUser = (jwt) => async (dispatch) => {
   dispatch({ type: GET_USER_REQUEST });
 
-  const baseUrl = "http://localhost:5454";
+  const baseUrl = "http://localhost:5455";
 
   try {
     const response = await axios.get(`${baseUrl}/api/users/profile`, {

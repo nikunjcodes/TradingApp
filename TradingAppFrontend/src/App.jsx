@@ -1,32 +1,32 @@
-import { useEffect, useState } from "react";
-
-import "./index.css";
-import Navbar from "./page/home/Navbar/Navbar";
-import Home from "./page/home/Home";
-import TestNavbar from "./page/home/Navbar/TestNavbar";
-import Portfolio from "./page/Portfolio/Portfolio";
-import Activity from "./page/Activity/Activity";
-import Wallet from "./page/Wallet/Wallet";
-import Withdrawal from "./page/Withdrawal/Withdrawal";
-import PaymentDetails from "./page/Payment Details/PaymentDetails";
-import StockDetails from "./page/Stock Details/StockDetails";
-import Watchlist from "./page/Watchlist/Watchlist";
-import Profile from "./page/Profile/Profile";
-import SearchCoin from "./page/Search/SearchCoin";
-import NotFound from "./page/Notfound/NotFound";
 import { Route, Routes } from "react-router-dom";
-import Auth from "./page/Auth/Auth";
+import Activity from "./pages/Activity/Activity";
+import Auth from "./pages/Auth/Auth";
+import Home from "./pages/Home/Home";
+import Navbar from "./pages/Navbar/Navbar";
+import Notfound from "./pages/Notfound/Notfound";
+import PaymentDetails from "./pages/Payment Details/PaymentDetails";
+import Portfolio from "./pages/Portfolio/Portfolio";
+import Profile from "./pages/Profile/Profile";
+import SearchCoin from "./pages/Search Coin/SearchCoin";
+import StockDetails from "./pages/Stock Details/StockDetails";
+import Wallet from "./pages/Wallet/Wallet";
+import Watchlist from "./pages/Watchlist/Watchlist";
+import Withdrawal from "./pages/Withdrawal/Withdrawal";
 import { useDispatch, useSelector } from "react-redux";
-import { store } from "./State/Store";
+import { useEffect } from "react";
 import { getUser } from "./State/Auth/Action";
+
 function App() {
-  const auth = useSelector((store) => store);
+  const { auth } = useSelector((store) => store);
   const dispatch = useDispatch();
 
-  console.log("auth --- ", auth);
+  console.log(" auth ------ ", auth);
+
   useEffect(() => {
     dispatch(getUser(auth.jwt || localStorage.getItem("jwt")));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth.jwt]);
+
   return (
     <>
       {auth.user ? (
@@ -42,8 +42,8 @@ function App() {
             <Route path="/market/:id" element={<StockDetails />} />
             <Route path="/watchlist" element={<Watchlist />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/search" element={<SearchCoin />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="/search-coin" element={<SearchCoin />} />
+            <Route path="*" element={<Notfound />} />
           </Routes>
         </div>
       ) : (
