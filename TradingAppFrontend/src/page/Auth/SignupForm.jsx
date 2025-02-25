@@ -9,10 +9,14 @@ import {
   FormField,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { register } from "../../State/Auth/Action";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 
 const SignupForm = () => {
+  const dispatch = useDispatch();
+
   const form = useForm({
     resolver: "",
     defaultValues: {
@@ -22,6 +26,7 @@ const SignupForm = () => {
     },
   });
   const onSubmit = (data) => {
+    dispatch(register(data));
     console.log(data);
   };
   return (
@@ -48,7 +53,7 @@ const SignupForm = () => {
           />
           <FormField
             control={form.control}
-            name="ifsc"
+            name="email"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
@@ -74,6 +79,7 @@ const SignupForm = () => {
                   <Input
                     className="border w-full border-gray-700 p-5"
                     placeholder="Password"
+                    type="password"
                     {...field}
                   />
                 </FormControl>
@@ -84,7 +90,7 @@ const SignupForm = () => {
           />
 
           <Dialog>
-            <DialogClose className="w-full">
+            <DialogClose asChild className="w-full">
               <Button type="submit" className="w-full py-5">
                 SUBMIT
               </Button>

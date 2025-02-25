@@ -14,6 +14,7 @@ import React from "react";
 import AccountVerificationForm from "./AccountVerificationForm";
 
 const Profile = () => {
+  const { auth } = useSelector((store) => store);
   const handleTwoStepVerificatoin = () => {
     console.log("two step verification");
   };
@@ -47,11 +48,11 @@ const Profile = () => {
               <div className="space-y-7">
                 <div className="flex">
                   <p className="w-[9rem]">Address :</p>
-                  <p className="text-gray-500">nikunjjakhotiya16@gmail.com</p>
+                  <p className="text-gray-500">{auth.user?.address}</p>
                 </div>
                 <div className="flex">
                   <p className="w-[9rem]">City :</p>
-                  <p className="text-gray-500">Nikunj</p>
+                  <p className="text-gray-500">{auth.user?.city}</p>
                 </div>
                 <div className="flex">
                   <p className="w-[9rem]">Postcode :</p>

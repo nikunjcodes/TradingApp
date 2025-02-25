@@ -9,10 +9,15 @@ import {
   FormField,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { login } from "../../State/Auth/Action";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const SigninForm = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const form = useForm({
     resolver: "",
     defaultValues: {
@@ -21,6 +26,7 @@ const SigninForm = () => {
     },
   });
   const onSubmit = (data) => {
+    dispatch(login({ data, navigate }));
     console.log(data);
   };
   return (
@@ -29,7 +35,7 @@ const SigninForm = () => {
         <form className="space-y-6 " onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
             control={form.control}
-            name="ifsc"
+            name="email"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
@@ -55,6 +61,7 @@ const SigninForm = () => {
                   <Input
                     className="border w-full border-gray-700 p-5"
                     placeholder="Password"
+                    type="password"
                     {...field}
                   />
                 </FormControl>
@@ -65,7 +72,7 @@ const SigninForm = () => {
           />
 
           <Dialog>
-            <DialogClose className="w-full">
+            <DialogClose asChild className="w-full">
               <Button type="submit" className="w-full py-5">
                 SUBMIT
               </Button>
